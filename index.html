@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 2nd Anniversary 🤍</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Prompt:wght@300;400&display=swap');
+
+        :root {
+            --bg-color: #fdfbfb;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --text-main: #4a4a4a;
+            --accent: #d4a373;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            font-family: 'Prompt', sans-serif;
+            color: var(--text-main);
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1, h2, .serif-text {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in-out, transform 1s ease;
+            transform: translateY(20px);
+        }
+
+        .page.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Gimmick 1: Runaway Button */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            position: relative;
+            height: 50px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .btn-yes {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            background: #bfa084;
+            transform: scale(1.05);
+        }
+
+        .btn-no {
+            background: #e0e0e0;
+            color: #666;
+            position: relative;
+        }
+
+        /* Gimmick 2: Interactive Envelope */
+        .envelope-container {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #f4e8e1;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .envelope-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 120px solid #ebd7ca;
+            transform-origin: top;
+            transition: transform 0.8s ease;
+            z-index: 4;
+        }
+
+        .envelope-container.open .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 45px;
+            background: #c74b4b;
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: opacity 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+        }
+
+        .envelope-container.open .wax-seal {
+            opacity: 0;
+        }
+
+        .letter-preview {
+            position: absolute;
+            bottom: 0;
+            width: 280px;
+            height: 180px;
+            background: white;
+            border-radius: 8px;
+            z-index: 2;
+            transition: transform 1s ease 0.5s, height 1s ease 0.5s;
+        }
+
+        .envelope-container.open .letter-preview {
+            transform: translateY(-100px);
+        }
+
+        /* Message Page */
+        .typewriter-text {
+            font-size: 16px;
+            line-height: 1.8;
+            min-height: 200px;
+            text-align: left;
+            white-space: pre-line;
+            margin-bottom: 20px;
+        }
+
+        .signature {
+            font-size: 24px;
+            text-align: right;
+            opacity: 0;
+            transition: opacity 2s ease;
+            color: var(--accent);
+        }
+
+        /* Floating Emojis Gimmick */
+        .emoji {
+            position: absolute;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        #youtube-player { display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Page 1: Playful Question -->
+    <div id="page1" class="page active">
+        <div class="glass-card">
+            <h1 style="font-size: 28px; margin-bottom: 10px;">Surprise! ✨</h1>
+            <p>พร้อมที่จะเปิดดูของขวัญวันครบรอบของเราหรือยัง?</p>
+            <div class="btn-group">
+                <button class="btn btn-yes" onclick="nextPage(2)">พร้อมแล้ว!</button>
+                <button class="btn btn-no" id="noBtn">ยังไม่พร้อม</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2: Interactive Envelope -->
+    <div id="page2" class="page">
+        <h2 style="margin-bottom: 40px; font-size: 32px; color: #555;">You've got mail 💌</h2>
+        <div class="envelope-container" id="envelope" onclick="openEnvelope()">
+            <div class="flap"></div>
+            <div class="letter-preview"></div>
+            <div class="wax-seal">2</div>
+        </div>
+        <p style="margin-top: 30px; font-size: 14px; color: #888;">(กดที่ซองจดหมายเพื่อเปิด)</p>
+    </div>
+
+    <!-- Page 3: The Letter -->
+    <div id="page3" class="page">
+        <div class="glass-card" style="max-width: 500px; text-align: left;">
+            <h1 style="text-align: center; margin-bottom: 20px; color: var(--accent);">Happy 2nd Anniversary</h1>
+            <div id="message" class="typewriter-text"></div>
+            <div id="signature" class="signature serif-text">With all my love 🤍</div>
+        </div>
+    </div>
+
+    <!-- YouTube Music API -->
+    <div id="youtube-player"></div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // --- Runaway Button Logic ---
+        const noBtn = document.getElementById('noBtn');
+        noBtn.addEventListener('mouseover', function() {
+            const container = this.parentElement;
+            const maxX = container.offsetWidth - this.offsetWidth;
+            const maxY = 100; // Limit vertical movement
+            
+            const randomX = Math.floor(Math.random() * 100) - 50; 
+            const randomY = Math.floor(Math.random() * 100) - 50;
+            
+            this.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        });
+
+        // --- Page Navigation ---
+        function nextPage(pageNum) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page${pageNum}`).classList.add('active');
+        }
+
+        // --- Envelope Logic ---
+        let envelopeOpened = false;
+        function openEnvelope() {
+            if(envelopeOpened) return;
+            envelopeOpened = true;
+            
+            document.getElementById('envelope').classList.add('open');
+            playMusic();
+            startEmojiRain();
+            
+            setTimeout(() => {
+                nextPage(3);
+                setTimeout(typeMessage, 1000);
+            }, 2000);
+        }
+
+        // --- Typewriter Logic ---
+        const text = `Happy Aniversary 2 Years 🎉\n
+        สุขสันต์วันครบรอบ 2 ปีนะคะ 🎉\n
+ขอบคุณที่คอยเป็นความน่ารัก ความสดใส และเป็นความสบายใจให้กันมาตลอดเลยนะ\n
+เค้าอยากจะบอกกับเธอว่า ขอบคุณที่ไม่ปล่อยมือเค้าเลยไม่ว่าจะเจออุปสรรค์อะไรก็ตาม\n
+ขอโทษที่ชอบทำนิสัยไม่ดีกับเธอตลอดเลย ขอโทษที่ขี้งอแงใส่ด้วยงับ\n
+สัญญาว่าจะทำให้น้อยๆลง อิอิ จะพยายามทำให้เลยยยย\n
+สุดท้ายนี้ เค้าขอให้เราเติบโตไปด้วยกัน จับมือกันแน่นๆ แบบนี้ไปนานๆ เลยนะ\n
+รักนะคะ ดวงใจของพี่ ❤️`;
+
+        let i = 0;
+        function typeMessage() {
+            if (i < text.length) {
+                document.getElementById("message").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeMessage, 50); // Speed
+            } else {
+                document.getElementById("signature").style.opacity = 1;
+            }
+        }
+
+        // --- Emoji Rain Gimmick ---
+        const emojis = ['💖', '🐻', '🌈', '🐵', '✨', '☁️'];
+        function startEmojiRain() {
+            setInterval(() => {
+                const emoji = document.createElement('div');
+                emoji.classList.add('emoji');
+                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                
+                emoji.style.left = Math.random() * 100 + 'vw';
+                emoji.style.top = '-50px';
+                
+                const duration = Math.random() * 3 + 2;
+                emoji.style.animationDuration = duration + 's';
+                
+                document.body.appendChild(emoji);
+                
+                setTimeout(() => {
+                    emoji.remove();
+                }, duration * 1000);
+            }, 300);
+        }
+
+        // --- YouTube Player Logic (Perfect - Ed Sheeran) ---
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: '2Vv-BfVoq4g', // Perfect
+                playerVars: { 'autoplay': 0, 'controls': 0, 'showinfo': 0, 'rel': 0 },
+            });
+        }
+
+        function playMusic() {
+            if (player && typeof player.playVideo === 'function') {
+                player.playVideo();
+            }
+        }
+    </script>
+</body>
+</html>
